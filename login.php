@@ -24,14 +24,25 @@
 	// Check if the request method is POST (i.e, form submitted)
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		
-		// Retrieve the value of the 'email' field from the POST data
-		$email = $_POST['email'];
+		// Retrieve the value of the 'employeeID' field from the POST data
+		$employeeID = $_POST['employeeID'];
 
-		// Retrieve the value of the 'orderNum' field from the POST data
+		// Retrieve the value of the 'password' field from the POST data
 		$password = $_POST['password'];
 
 		//retrieve info
-		$info = getInfo($pdo, $email, $orderNum);
+		$info = getInfo($pdo, $employeeID, $orderNum);
+
+		//redirect to the correct location
+		if ($info) {
+			if ($info['department'] === 'Admin') {
+				header("Location: admin.php");
+				exit;
+			} else {
+				header("Location: basic.php");
+				exit;
+			}
+		}
 		
 	}
 // Closing PHP tag  ?> 
@@ -68,8 +79,8 @@
 					<h1>Login</h1>
 					<form action="login.php" method="POST">
 						<div class="form-group">
-							<label for="email">Employee ID:</label>
-							<input type="email" id="email" name="email" required>
+							<label for="employeeID">Employee ID:</label>
+							<input type="text" id="employeeID" name="employeeID" required>
 						</div>
 
 						<div class="form-group">
@@ -80,18 +91,6 @@
 						<button type="submit">Submit Info</button>
 					</form>
 				</div>
-				
-				<?php if (!empty($info)): ?>
-					<div class="order-details">
-
-						<!-- 
-				  		  -- TO DO: Fill in ALL the placeholders for this order from the db
-  						  -->
-						<h1>User Details</h1>
-						<p><strong>Name: </strong> <?= $info['first_name'] ?></p>
-				      
-					</div>
-				<?php endif; ?>
 
 			</div>
 
