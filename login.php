@@ -74,8 +74,8 @@
 
 		<main>
 
-			<div class="order-lookup-container">
-				<div class="order-lookup-container">
+			<div class="login-wrapper">
+				<div class="login-container">
 					<h1>Login</h1>
 					<form action="login.php" method="POST">
 						<div class="form-group">

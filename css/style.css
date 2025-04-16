@@ -19,10 +19,6 @@ header {
   align-items: center;
 }
 
-.logo img {
-  width: 115px;
-  padding-right: 20px;
-}
 
 nav ul {
   list-style-type: none;
@@ -127,9 +123,19 @@ nav ul li a:hover {
   color: darkgrey;
 }
 
-.order-lookup-container {
-  max-width: 600px;
-  margin: 0 auto;
+.login-wrapper {
+  margin-top: 100px; /* pushes the login down */
+  justify-content: center; /* makes sure its center justified */
+}
+
+.login-container {
+  max-width: 500px;
+  background-color: #d0d0d0; /* adds the box around the login */
+  border-radius: 10px; /* adds a border */
+}
+
+.login-container h1 {
+  text-align: center; /* center aligns the login heading */
 }
 
 .form-group {
@@ -163,29 +169,6 @@ button:hover {
   background-color: #097969;
 }
 
-.order-lookup-container {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.order-details {
-  margin-top: 20px;
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-}
-
-.order-details h2 {
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-.order-details p {
-  margin-bottom: 5px;
-  font-family: sans-serif;
-  color: darkgrey;
-}
 
 .about-container {
   max-width: 800px;
