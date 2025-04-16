@@ -68,7 +68,7 @@
 					<h1>Login</h1>
 					<form action="login.php" method="POST">
 						<div class="form-group">
-							<label for="email">Email:</label>
+							<label for="email">Employee ID:</label>
 							<input type="email" id="email" name="email" required>
 						</div>
 
