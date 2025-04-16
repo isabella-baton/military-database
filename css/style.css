@@ -124,8 +124,11 @@ nav ul li a:hover {
 }
 
 .login-wrapper {
+  height: 100vh; /* the size of the entire screen */
   margin-top: 100px; /* pushes the login down */
-  justify-content: center; /* makes sure its center justified */
+  /* makes sure its center justified */
+  justify-content: center; 
+  align-items: center;
 }
 
 .login-container {
