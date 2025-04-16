@@ -124,6 +124,7 @@ nav ul li a:hover {
 }
 
 .login-wrapper {
+  display: flex;
   height: 100vh; /* the size of the entire screen */
   margin-top: 100px; /* pushes the login down */
   /* makes sure its center justified */
@@ -132,10 +133,10 @@ nav ul li a:hover {
 }
 
 .login-container {
-  max-width: 500px;
+  max-width: 800px;
   background-color: #d0d0d0; /* adds the box around the login */
   border-radius: 5px; /* rounds the corners */
-  padding: 10px; /* adds a barrier around so it looks better */
+  padding: 50px; /* adds a barrier around so it looks better */
   justify-content: center; /* makes sure its center justified */
 }
 
