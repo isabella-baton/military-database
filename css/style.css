@@ -131,7 +131,8 @@ nav ul li a:hover {
 .login-container {
   max-width: 500px;
   background-color: #d0d0d0; /* adds the box around the login */
-  border-radius: 10px; /* adds a border */
+  border-radius: 50px; /* adds a border */
+  justify-content: center; /* makes sure its center justified */
 }
 
 .login-container h1 {
