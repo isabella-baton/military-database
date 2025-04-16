@@ -124,6 +124,7 @@ nav ul li a:hover {
 }
 
 .login-wrapper {
+  display: flex;
   height: 100vh; /* the size of the entire screen */
   margin-top: 100px; /* pushes the login down */
   /* makes sure its center justified */
