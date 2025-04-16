@@ -2,12 +2,12 @@
 
 $type     = 'mysql';                             // Type of database
 $server   = '192.185.2.183';                    // Server the database is on
-$db       = 'isabella_toystore';     // Name of the database
+$db       = 'ginavinc_Military_Warehouse_Databse';     // Name of the database
 $port     = '3306';                           // Port is usually 3306 in Hostgator
 $charset  = 'utf8mb4';                       // UTF-8 encoding using 4 bytes of data per char
 
-$username = 'isabella_toyAdmin';     // Enter YOUR cPanel username and user here
-$password = 'toyAdminPassword';           // Enter YOUR user password here
+$username = 'ginavinc_militaryAdmin';     // Enter YOUR cPanel username and user here
+$password = 'militaryAdminPassword';           // Enter YOUR user password here
 
 
 
