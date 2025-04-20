@@ -22,13 +22,10 @@ body {
   border-radius: 12px;
   width: 400px;
   max-width: 90%;
-  align-items: center;
-  text-align: center;
 }
 
 .form-group {
   margin-bottom: 20px;
-  width: 100%;
 }
 
 input[type="text"], input[type="password"] {
