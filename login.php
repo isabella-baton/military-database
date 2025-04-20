@@ -55,7 +55,7 @@
 	}
 ?> 
 
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
 
 	<head>
