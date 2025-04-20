@@ -1,87 +1,47 @@
-* {
+body {
   margin: 0;
   padding: 0;
+  height: 100%;
+  background-color: white;
+  border: 20px solid #4b5320;
   box-sizing: border-box;
-  font-family: "Roboto Condensed", sans-serif;
-}
-
-body {
-  border: 5px solid #4559b4;
-  padding: 20px;
-  margin: 0;
-}
-
-header {
-  background-color: #4559b4;
-  color: #fff;
-  padding: 35px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.login-wrapper {
-  display: flex;
-  height: 100vh; /* the size of the entire screen */
-  /* makes sure its center justified */
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
 }
 
 .login-container {
-  width: 1000px;
-  background-color: #d0d0d0; /* adds the box around the login */
-  border-radius: 5px; /* rounds the corners */
-  padding: 70px; /* adds a barrier around so it looks better */
-  justify-content: center; /* makes sure its center justified */
-  font-size: 20px; /* larger font size */
+  background-color: #ccc;
+  padding: 40px;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
 }
 
 .form-group {
   margin-bottom: 20px;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
 input[type="text"], input[type="password"] {
   width: 100%;
-  padding: 15px;
-  font-size: 20px;
-  border-radius: 5px;
+  padding: 12px;
+  font-size: 26px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #999;
 }
 
 button {
-  padding: 10px 20px;
-  background-color: #4559b4;
-  color: #fff;
+  width: 100%;
+  padding: 12px;
+  background-color: #4b5320;
+  color: white;
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  border-radius: 6px;
   font-size: 16px;
+  cursor: pointer;
 }
 
 button:hover {
-  background-color: #097969;
-}
-
-
-.about-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.about-container p {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-family: sans-serif;
-  color: darkgrey;
-  text-align: justify;
+  background-color: #3e461a;
 }

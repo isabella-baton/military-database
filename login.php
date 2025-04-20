@@ -67,35 +67,24 @@
 
 	<body>
 		<main>
-			<div class="login-wrapper">
-				<div class="login-container">
-					<h1>Login</h1>
+			<div class="login-container">
+				<h1>Login</h1>
 
-					<?php
-					#checks if there is an error message
-					if (empty($error) == false) {
-						#outputs the error as a popup!!
-						
-					}
-					?>
+				<form action="login.php" method="POST">
 
-					<form action="login.php" method="POST">
+					<div class="form-group">
+						<label for="employeeID">Employee ID:</label>
+						<input type="text" id="employeeID" name="employeeID" required>
+					</div>
 
- 				 		<div class="form-group">
-    						<label for="employeeID">Employee ID:</label>
-    						<input type="text" id="employeeID" name="employeeID" required>
-  						</div>
+					<div class="form-group">
+						<label for="password">Password:</label>
+						<input type="password" id="password" name="password" required>
+					</div>
 
-  						<div class="form-group">
-    						<label for="password">Password:</label>
-    						<input type="password" id="password" name="password" required>
-  						</div>
+					<button type="submit">Submit</button>
 
-  						<button type="submit">Submit Info</button>
-
-					</form>
-
-				</div>
+				</form>
 
 			</div>
 
