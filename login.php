@@ -49,6 +49,7 @@
 			exit;
 		} else {
 			$error = "Invalid login - please try again.";
+			echo "<script>alert('$error');</script>";
 		}
 		
 	}
@@ -74,12 +75,12 @@
 					#checks if there is an error message
 					if (empty($error) == false) {
 						#outputs the error as a popup!!
-						echo "<script>alert('$error');</script>";
+						
 					}
 					?>
 
 					<form action="login.php" method="POST">
-						
+
  				 		<div class="form-group">
     						<label for="employeeID">Employee ID:</label>
     						<input type="text" id="employeeID" name="employeeID" required>
