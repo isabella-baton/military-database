@@ -1,14 +1,20 @@
-html, body {
+html {
+  height: 100%;
+  border: 20px solid #4b5320;
+  box-sizing: border-box;
+}
+
+body {
   margin: 0;
   padding: 0;
   height: 100%;
   background-color: white;
-  border: 20px solid #4b5320;
-  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: sans-serif;
 }
+
 
 .login-container {
   background-color: #ccc;
