@@ -3,9 +3,6 @@
 	#database connection script !
 	require 'includes/database-connection.php';
 
-	#start the session
-	session_start();
-
 	#set error message to empty for later handling
 	$error = "";
 
@@ -35,9 +32,9 @@
 
 		#ensure there is info AND their password is correct
 		if ($info && $password === $info['password']) {
-			#set the info for the session to the specific employee
-			$_SESSION['employeeID'] = $employeeID;
-			$_SESSION['department'] = $info['department'];
+			#set cookies for later authentication (expires in one hour)
+			setcookie("employeeID", $employeeID, time() + 3600, "/");
+        	setcookie("department", $info['department'], time() + 3600, "/");
 
 			#redirect the employee to the correct place
 			if ($info['department'] === 'Admin') {
