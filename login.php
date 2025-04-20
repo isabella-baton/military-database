@@ -1,51 +1,58 @@
-<?php   										// Opening PHP tag
+<?php
 	
-	// Include the database connection script
+	#database connection script !
 	require 'includes/database-connection.php';
 
+	#start the session
+	session_start();
+
+	#set error message to empty for later handling
+	$error = "";
 
 
-	 function getInfo(PDO $pdo, string $employeeID, string $password) {
+	#get employee information
+	function getInfo(PDO $pdo, string $employeeID) {
 
-		//sql query (getting all so i can use as)
-		$sql = "SELECT * 				   
-			FROM employee e
-			WHERE e.employeeID = :employeeID
-			AND e.password = :password;";
+		#sql query (gets only required fields)
+		$sql = "SELECT employeeID, password, department				   
+			FROM employee
+			WHERE employeeID = :employeeID";
 
-		#get the info using pdo
-		$info = pdo($pdo, $sql, ['employeeID' => $employeeID, 'password' => $password])->fetch();
+		#retrieve info using the sql query + pdo
+		$info = pdo($pdo, $sql, ['employeeID' => $employeeID])->fetch();
 
-		//return info
+		#return info
 		return $info;
 	}
-
-	
-	// Check if the request method is POST (i.e, form submitted)
+	#check if request method is POST
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		
-		// Retrieve the value of the 'employeeID' field from the POST data
+		#retrieve inputted info
 		$employeeID = $_POST['employeeID'];
-
-		// Retrieve the value of the 'password' field from the POST data
 		$password = $_POST['password'];
 
-		//retrieve info
-		$info = getInfo($pdo, $employeeID, $orderNum);
+		#retrieve employee info
+		$info = getInfo($pdo, $employeeID, $password);
 
-		//redirect to the correct location
-		if ($info) {
+		#ensure there is info AND their password is correct
+		if ($info && password_verify($password, $info['password'])) {
+			#set the info for the session to the specifc employee
+			$_SESSION['employeeID'] = $employeeID;
+			$_SESSION['department'] = $info['department'];
+
+			#redirect the employee to the correct place
 			if ($info['department'] === 'Admin') {
 				header("Location: admin.php");
-				exit;
 			} else {
 				header("Location: basic.php");
-				exit;
 			}
+
+			exit;
+		} else {
+			$error = "Invalid login - please try again."
 		}
 		
 	}
-// Closing PHP tag  ?> 
+?> 
 
 <!DOCTYPE>
 <html>
@@ -55,28 +62,22 @@
   		<meta name="viewport" content="width=device-width, initial-scale=1.0">
   		<title>Military Database</title>
   		<link rel="stylesheet" href="css/style.css">
-  		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
 	</head>
 
 	<body>
-
-		<header>
-			<div class="header-left">
-	      		<nav>
-	      			<ul>
-	      				<li><a href="login.php">Login</a></li>
-			        </ul>
-			    </nav>
-		   	</div>
-		</header>
-
 		<main>
-
 			<div class="login-wrapper">
 				<div class="login-container">
 					<h1>Login</h1>
+
+					<?php
+					#checks if there is an error message
+					if (empty($error) == false) {
+						#outputs the error
+						echo "<p class = 'error'>$error</p>";
+					}
+					?>
+
 					<form action="login.php" method="POST">
 						<div class="form-group">
 							<label for="employeeID">Employee ID:</label>
@@ -85,7 +86,7 @@
 
 						<div class="form-group">
 							<label for="password">Password:</label>
-							<input type="text" id="password" name="password" required>
+							<input type="password" id="password" name="password" required>
 						</div>
 
 						<button type="submit">Submit Info</button>
