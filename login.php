@@ -34,7 +34,7 @@
 		$info = getInfo($pdo, $employeeID);
 
 		#ensure there is info AND their password is correct
-		if ($info && password === $info['password']) {
+		if ($info && $password === $info['password']) {
 			#set the info for the session to the specific employee
 			$_SESSION['employeeID'] = $employeeID;
 			$_SESSION['department'] = $info['department'];
