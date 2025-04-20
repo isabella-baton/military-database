@@ -31,7 +31,7 @@
 		$password = $_POST['password'];
 
 		#retrieve employee info
-		$info = getInfo($pdo, $employeeID, $password);
+		$info = getInfo($pdo, $employeeID);
 
 		#ensure there is info AND their password is correct
 		if ($info && password_verify($password, $info['password'])) {
@@ -73,24 +73,27 @@
 					<?php
 					#checks if there is an error message
 					if (empty($error) == false) {
-						#outputs the error
-						echo "<p class = 'error'>$error</p>";
+						#outputs the error as a popup!!
+						echo "<script>alert('$error');</script>";
 					}
 					?>
 
 					<form action="login.php" method="POST">
-						<div class="form-group">
-							<label for="employeeID">Employee ID:</label>
-							<input type="text" id="employeeID" name="employeeID" required>
-						</div>
+						
+ 				 		<div class="form-group">
+    						<label for="employeeID">Employee ID:</label>
+    						<input type="text" id="employeeID" name="employeeID" required>
+  						</div>
 
-						<div class="form-group">
-							<label for="password">Password:</label>
-							<input type="password" id="password" name="password" required>
-						</div>
+  						<div class="form-group">
+    						<label for="password">Password:</label>
+    						<input type="password" id="password" name="password" required>
+  						</div>
 
-						<button type="submit">Submit Info</button>
+  						<button type="submit">Submit Info</button>
+
 					</form>
+
 				</div>
 
 			</div>

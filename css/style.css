@@ -154,9 +154,8 @@ label {
 
 input[type="text"], input[type="password"] {
   width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
+  padding: 15px;
+  font-size: 20px;
   border-radius: 5px;
 }
 
