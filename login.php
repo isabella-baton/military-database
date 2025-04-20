@@ -48,7 +48,7 @@
 
 			exit;
 		} else {
-			$error = "Invalid login - please try again."
+			$error = "Invalid login - please try again.";
 		}
 		
 	}
