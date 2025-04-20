@@ -56,6 +56,7 @@
 ?> 
 
 <!DOCTYPE html>
+
 <html>
 
 	<head>
