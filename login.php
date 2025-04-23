@@ -38,9 +38,11 @@
 
 			#redirect the employee to the correct place
 			if ($info['department'] === 'Admin') {
+			        echo "Redirecting to admin..."; 
 				header("Location: admin.php");
 				exit;
 			} else {
+				echo "Redirecting to basic..."; 
 				header("Location: basic.php");
 				exit;
 			}
