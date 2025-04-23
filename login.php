@@ -3,6 +3,9 @@
 	#database connection script !
 	require 'includes/database-connection.php';
 
+	#start the session
+	session_start();
+
 	#set error message to empty for later handling
 	$error = "";
 
@@ -32,19 +35,18 @@
 
 		#ensure there is info AND their password is correct
 		if ($info && $password === $info['password']) {
-			#set cookies for later authentication (expires in one hour)
-			setcookie("employeeID", $employeeID, time() + 3600, "/");
-        	setcookie("department", $info['department'], time() + 3600, "/");
+			#set the info for the session to the specific employee
+			$_SESSION['employeeID'] = $employeeID;
+			$_SESSION['department'] = $info['department'];
 
 			#redirect the employee to the correct place
 			if ($info['department'] === 'Admin') {
 				header("Location: admin.php");
-				exit;
 			} else {
 				header("Location: basic.php");
-				exit;
 			}
-			
+
+			exit;
 		} else {
 			$error = "Invalid login - please try again.";
 			echo "<script>alert('$error');</script>";
@@ -58,10 +60,10 @@
 <html>
 
 	<head>
-		<meta charset = "UTF-8">
-  		<meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+		<meta charset="UTF-8">
+  		<meta name="viewport" content="width=device-width, initial-scale=1.0">
   		<title>Military Database</title>
-  		<link rel = "stylesheet" href = "css/login.css">
+  		<link rel="stylesheet" href="css/login.css">
 	</head>
 
 	<body>
@@ -71,17 +73,17 @@
 
 				<form action="login.php" method="POST">
 
-					<div class = "form-group">
-						<label for = "employeeID">Employee ID:</label>
-						<input type = "text" id = "employeeID" name = "employeeID" required>
+					<div class="form-group">
+						<label for="employeeID">Employee ID:</label>
+						<input type="text" id="employeeID" name="employeeID" required>
 					</div>
 
-					<div class=  "form-group">
-						<label for = "password">Password:</label>
-						<input type = "password" id = "password" name = "password" required>
+					<div class="form-group">
+						<label for="password">Password:</label>
+						<input type="password" id="password" name="password" required>
 					</div>
 
-					<button type = "submit">Submit</button>
+					<button type="submit">Submit</button>
 
 				</form>
 
@@ -92,3 +94,4 @@
 	</body>
 
 </html>
+
