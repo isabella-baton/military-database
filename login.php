@@ -35,18 +35,23 @@
 
 		#ensure there is info AND their password is correct
 		if ($info && $password === $info['password']) {
-			#set the info for the session to the specific employee
 			$_SESSION['employeeID'] = $employeeID;
 			$_SESSION['department'] = $info['department'];
-
-			#redirect the employee to the correct place
+	
+			// TEMPORARY: Debug echo to verify redirect logic
+			echo "Login successful!<br>";
+			echo "Redirecting to: " . ($info['department'] === 'Admin' ? 'admin.php' : 'basic.php');
+			exit;
+	
+			// To enable real redirection, uncomment these lines and remove the above echo:
+			/*
 			if ($info['department'] === 'Admin') {
 				header("Location: admin.php");
 			} else {
 				header("Location: basic.php");
 			}
-
 			exit;
+			*/
 		} else {
 			$error = "Invalid login - please try again.";
 			echo "<script>alert('$error');</script>";
