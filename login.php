@@ -35,7 +35,11 @@
 			#set cookies for later authentication (expires in one hour)
 			setcookie("employeeID", $employeeID, time() + 3600, "/");
         	setcookie("department", $info['department'], time() + 3600, "/");
-
+                         
+			 echo "Login successful!<br>";
+                         echo "Redirecting to: " . ($info['department'] === 'Admin' ? 'admin.php' : 'basic.php');
+                         exit;
+/*
 			#redirect the employee to the correct place
 			if ($info['department'] === 'Admin') {
 			        echo "Redirecting to admin..."; 
@@ -46,7 +50,7 @@
 				header("Location: basic.php");
 				exit;
 			}
-			
+			*/
 		} else {
 			$error = "Invalid login - please try again.";
 			echo "<script>alert('$error');</script>";
