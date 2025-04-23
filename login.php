@@ -1,46 +1,97 @@
 <?php
-ob_start();
-session_start();
+	
+	#database connection script !
+	require 'includes/database-connection.php';
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+	#start the session
+	session_start();
 
-require 'includes/database-connection.php';
+	#set error message to empty for later handling
+	$error = "";
 
-function getInfo(PDO $pdo, string $employeeID) {
-    $sql = "SELECT employeeID, password, department FROM employee WHERE employeeID = :employeeID";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(['employeeID' => $employeeID]);
-    return $stmt->fetch();
-}
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $employeeID = $_POST['employeeID'];
-    $password = $_POST['password'];
+	#get employee information
+	function getInfo(PDO $pdo, string $employeeID) {
 
-    $info = getInfo($pdo, $employeeID);
+		#sql query (gets only required fields)
+		$sql = "SELECT employeeID, password, department				   
+			FROM employee
+			WHERE employeeID = :employeeID";
 
-    if ($info && $password === $info['password']) {
-        $_SESSION['employeeID'] = $employeeID;
-        $_SESSION['department'] = $info['department'];
+		#retrieve info using the sql query + pdo
+		$info = pdo($pdo, $sql, ['employeeID' => $employeeID])->fetch();
 
-        // DEBUG: print instead of redirect
-        echo "<h2>Login successful!</h2>";
-        echo "<p>Department: {$info['department']}</p>";
-        echo "<p>Redirecting to: " . ($info['department'] === 'Admin' ? 'admin.php' : 'basic.php') . "</p>";
+		#return info
+		return $info;
+	}
+	#check if request method is POST
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		#retrieve inputted info
+		$employeeID = $_POST['employeeID'];
+		$password = $_POST['password'];
 
-        // To test redirect uncomment below and comment out the echo above:
-        // header("Location: " . ($info['department'] === 'Admin' ? 'admin.php' : 'basic.php'));
-        exit;
-    } else {
-        echo "<h2>Invalid login - please try again.</h2>";
-    }
-}
-?>
+		#retrieve employee info
+		$info = getInfo($pdo, $employeeID);
 
-<form method="POST" action="login.php">
-    <label>Employee ID: <input type="text" name="employeeID" required></label><br>
-    <label>Password: <input type="password" name="password" required></label><br>
-    <button type="submit">Login</button>
-</form>
+		#ensure there is info AND their password is correct
+		if ($info && $password === $info['password']) {
+			#set the info for the session to the specific employee
+			$_SESSION['employeeID'] = $employeeID;
+			$_SESSION['department'] = $info['department'];
+
+			#redirect the employee to the correct place
+			if ($info['department'] === 'Admin') {
+				header("Location: admin.php");
+			} else {
+				header("Location: basic.php");
+			}
+
+			exit;
+		} else {
+			$error = "Invalid login - please try again.";
+			echo "<script>alert('$error');</script>";
+		}
+		
+	}
+?> 
+
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+  		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  		<title>Military Database</title>
+  		<link rel="stylesheet" href="css/login.css">
+	</head>
+
+	<body>
+		<main>
+			<div class="login-container">
+				<h1>Login</h1>
+
+				<form action="login.php" method="POST">
+
+					<div class="form-group">
+						<label for="employeeID">Employee ID:</label>
+						<input type="text" id="employeeID" name="employeeID" required>
+					</div>
+
+					<div class="form-group">
+						<label for="password">Password:</label>
+						<input type="password" id="password" name="password" required>
+					</div>
+
+					<button type="submit">Submit</button>
+
+				</form>
+
+			</div>
+
+		</main>
+
+	</body>
+
+</html>
 
