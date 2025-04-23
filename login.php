@@ -1,100 +1,90 @@
 <?php
-	
-	#database connection script !
-	require 'includes/database-connection.php';
+// Turn on output buffering and error reporting
+ob_start();
+session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-	#set error message to empty for later handling
-	$error = "";
+// Database connection
+require 'includes/database-connection.php';
 
+// Set error message
+$error = "";
 
-	#get employee information
-	function getInfo(PDO $pdo, string $employeeID) {
+// Get employee information
+function getInfo(PDO $pdo, string $employeeID) {
+    $sql = "SELECT employeeID, password, department FROM employee WHERE employeeID = :employeeID";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['employeeID' => $employeeID]);
+    return $stmt->fetch();
+}
 
-		#sql query (gets only required fields)
-		$sql = "SELECT employeeID, password, department				   
-			FROM employee
-			WHERE employeeID = :employeeID";
+// Check for form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $employeeID = $_POST['employeeID'];
+    $password = $_POST['password'];
 
-		#retrieve info using the sql query + pdo
-		$info = pdo($pdo, $sql, ['employeeID' => $employeeID])->fetch();
+    $info = getInfo($pdo, $employeeID);
 
-		#return info
-		return $info;
-	}
-	#check if request method is POST
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		#retrieve inputted info
-		$employeeID = $_POST['employeeID'];
-		$password = $_POST['password'];
+    // Debug: Check what's returned from DB
+    // var_dump($info); exit;
 
-		#retrieve employee info
-		$info = getInfo($pdo, $employeeID);
+    if ($info && $password === $info['password']) {
+        $_SESSION['employeeID'] = $employeeID;
+        $_SESSION['department'] = $info['department'];
 
-		#ensure there is info AND their password is correct
-		if ($info && $password === $info['password']) {
-			#set cookies for later authentication (expires in one hour)
-			setcookie("employeeID", $employeeID, time() + 3600, "/");
-        	setcookie("department", $info['department'], time() + 3600, "/");
-                         
-			 echo "Login successful!<br>";
-                         echo "Redirecting to: " . ($info['department'] === 'Admin' ? 'admin.php' : 'basic.php');
-                         exit;
-/*
-			#redirect the employee to the correct place
-			if ($info['department'] === 'Admin') {
-			        echo "Redirecting to admin..."; 
-				header("Location: admin.php");
-				exit;
-			} else {
-				echo "Redirecting to basic..."; 
-				header("Location: basic.php");
-				exit;
-			}
-			*/
-		} else {
-			$error = "Invalid login - please try again.";
-			echo "<script>alert('$error');</script>";
-		}
-		
-	}
-?> 
+        // TEMPORARY: Debug echo to verify redirect logic
+        echo "Login successful!<br>";
+        echo "Redirecting to: " . ($info['department'] === 'Admin' ? 'admin.php' : 'basic.php');
+        exit;
+
+        // To enable real redirection, uncomment these lines and remove the above echo:
+        /*
+        if ($info['department'] === 'Admin') {
+            header("Location: admin.php");
+        } else {
+            header("Location: basic.php");
+        }
+        exit;
+        */
+    } else {
+        $error = "Invalid login - please try again.";
+        echo "<script>alert('$error');</script>";
+    }
+}
+?>
 
 <!DOCTYPE html>
-
 <html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Military Database</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <main>
+        <div class="login-container">
+            <h1>Login</h1>
 
-	<head>
-		<meta charset = "UTF-8">
-  		<meta name = "viewport" content = "width=device-width, initial-scale=1.0">
-  		<title>Military Database</title>
-  		<link rel = "stylesheet" href = "css/login.css">
-	</head>
+            <form action="login.php" method="POST">
+                <div class="form-group">
+                    <label for="employeeID">Employee ID:</label>
+                    <input type="text" id="employeeID" name="employeeID" required>
+                </div>
 
-	<body>
-		<main>
-			<div class="login-container">
-				<h1>Login</h1>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
 
-				<form action="login.php" method="POST">
-
-					<div class = "form-group">
-						<label for = "employeeID">Employee ID:</label>
-						<input type = "text" id = "employeeID" name = "employeeID" required>
-					</div>
-
-					<div class=  "form-group">
-						<label for = "password">Password:</label>
-						<input type = "password" id = "password" name = "password" required>
-					</div>
-
-					<button type = "submit">Submit</button>
-
-				</form>
-
-			</div>
-
-		</main>
-
-	</body>
-
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </main>
+</body>
 </html>
+
+<?php ob_end_flush(); ?>
+
