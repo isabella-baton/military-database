@@ -43,15 +43,15 @@
 			echo "Redirecting to: " . ($info['department'] === 'Admin' ? 'admin.php' : 'basic.php');
 			exit;
 	
-			// To enable real redirection, uncomment these lines and remove the above echo:
-			/*
-			if ($info['department'] === 'Admin') {
+			//check the user's department
+			if($_SESSION['department'] === 'Admin') {
+				//redirect to admin
 				header("Location: admin.php");
+				exit;
 			} else {
 				header("Location: basic.php");
+				exit;
 			}
-			exit;
-			*/
 		} else {
 			$error = "Invalid login - please try again.";
 			echo "<script>alert('$error');</script>";
