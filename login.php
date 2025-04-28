@@ -9,7 +9,6 @@
 	#set error message to empty for later handling
 	$error = "";
 
-
 	#get employee information
 	function getInfo(PDO $pdo, string $employeeID) {
 
@@ -24,6 +23,7 @@
 		#return info
 		return $info;
 	}
+
 	#check if request method is POST
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		#retrieve inputted info
@@ -38,27 +38,21 @@
 			$_SESSION['employeeID'] = $employeeID;
 			$_SESSION['department'] = $info['department'];
 	
-			// TEMPORARY: Debug echo to verify redirect logic
-			/*echo "Login successful!<br>";
-			echo "Redirecting to: " . ($info['department'] === 'Admin' ? 'admin.php' : 'basic.php');
-			exit; */
-	
-			// To enable real redirection, uncomment these lines and remove the above echo:
-	
-			if ($info['department'] === 'Admin') {
+			// Check the user's department stored in the session
+			if ($_SESSION['department'] === 'Admin') {
+				// If the user is an Admin, redirect them to the admin dashboard
 				header("Location: admin.php");
-				exit; //stop script
+				exit; // Stop further script execution after redirect
 			} else {
-				//redirect to basic
+				// If the user is not an Admin, redirect them to the basic user dashboard
 				header("Location: basic.php");
-				exit; //stop script
+				exit; // Stop further script execution after redirect
 			}
-			exit;
+
 		} else {
 			$error = "Invalid login - please try again.";
 			echo "<script>alert('$error');</script>";
 		}
-		
 	}
 ?> 
 
