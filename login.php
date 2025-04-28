@@ -29,13 +29,7 @@
 		#retrieve inputted info
 		$employeeID = $_POST['employeeID'];
 		$password = $_POST['password'];
-
-		$hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-		$updateStmt = $conn->prepare("UPDATE employee SET password = ? WHERE employeeID = ?");
-		$updateStmt->bind_param("si", $hashed_password, $employeeID);
-		$updateStmt->close();
-
+		
 		#retrieve employee info
 		$info = getInfo($pdo, $employeeID);
 
