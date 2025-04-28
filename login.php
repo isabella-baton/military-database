@@ -44,13 +44,17 @@
 			exit; */
 	
 			// To enable real redirection, uncomment these lines and remove the above echo:
-			
+			/*
 			if ($info['department'] === 'Admin') {
 				header("Location: admin.php");
+				exit; //stop script
 			} else {
+				//redirect to basic
 				header("Location: basic.php");
+				exit; //stop script
 			}
 			exit;
+			*/
 		} else {
 			$error = "Invalid login - please try again.";
 			echo "<script>alert('$error');</script>";
