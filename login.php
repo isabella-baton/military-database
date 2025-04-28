@@ -47,10 +47,11 @@
 			if($_SESSION['department'] === 'Admin') {
 				//redirect to admin
 				header("Location: admin.php");
-				exit;
+				exit; //stop script
 			} else {
+				//redirect to basic
 				header("Location: basic.php");
-				exit;
+				exit; //stop script
 			}
 		} else {
 			$error = "Invalid login - please try again.";
