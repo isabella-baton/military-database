@@ -36,11 +36,13 @@
             // Check the user's department stored in the session
             if ($_SESSION['department'] === 'Admin') {
                 // If the user is an Admin, redirect them to the admin dashboard
-                header("Location: admin.php");
+                echo "Redirecting to admin.php";
+				header("Location: admin.php");
                 exit; // Stop further script execution after redirect
             } else {
                 // If the user is not an Admin, redirect them to the basic user dashboard
-                header("Location: basic.php");
+                echo "Redirecting to basic.php";
+				header("Location: basic.php");
                 exit; // Stop further script execution after redirect
             }
         } else {
