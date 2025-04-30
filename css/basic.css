@@ -25,6 +25,19 @@ header {
     font-size: 24px;
 }
 
+/*back to login text*/
+header a {
+    color: white;
+    background: none;
+    text-decoration: underline;
+    font-size: 16px;
+}
+
+header a:hover {
+    color: #e4e4e4;
+    background: none;
+}
+
 /*makes dashboard*/
 .dashboard-container {
     width: 90%;
