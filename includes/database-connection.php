@@ -8,7 +8,6 @@ $charset  = 'utf8mb4';                       // UTF-8 encoding using 4 bytes of 
 
 $username = 'ginavinc_militaryAdmin';     // Enter YOUR cPanel username and user here
 $password = 'militaryAdminPassword';           // Enter YOUR user password here
-@
 
 
 // DO *NOT* CHANGE ANYTHING BENEATH THIS LINE
