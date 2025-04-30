@@ -1,5 +1,5 @@
 <?php
-    require_once 'includes/database-connection.php';
+    include 'includes/database-connection.php';
     
     #initialize the employee id (hardcode to 20001, since our login is messed up)
     $employeeID = 20001;
