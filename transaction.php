@@ -41,7 +41,7 @@
         $nextID = getNextID($pdo);
 
         #sql query
-        $sql = "INSERT INTO transactions(transactionID, employeeID, barcodeID, transaction_type, timestamp, notes)
+        $sql = "INSERT INTO transaction(transactionID, employeeID, barcodeID, transaction_type, timestamp, notes)
                 VALUES (:transactionID, :employeeID, :barcodeID, :transaction_type, :notes, :timestamp)";
         
         #add to table
