@@ -16,7 +16,7 @@
     $availableItems = $pdo->query($availableItemsQuery)->fetchAll();
 
     #get issued items
-    $issuedItemsQuery = "SELECT b.barcodeID, i.name, a.due_date, DATEDIFF(CURDATE(), a.due_date) AS days_overdue
+    $issuedItemsQuery = "SELECT b.barcodeID, i.name, a.due_date, GREATEST(DATEDIFF(CURDATE(), a.due_date), 0) AS days_overdue
                          FROM item i
                          JOIN barcode b ON i.itemID = b.itemID
                          JOIN assigned_to a ON b.barcodeID = a.barcodeID
@@ -41,8 +41,8 @@
 <body>
     <!-- header prints the name of the page and has a link back to the login -->
     <header>
-        <h1>Basic Employee Dashboard</h1>
-        <a href="login.php">Back to Login</a>
+        <h1>Basic Dashboard</h1>
+        <a href="logout.php">Log Out</a>
     </header>
 
     <div class = "dashboard-container">

@@ -1,0 +1,90 @@
+/*background*/
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: sans-serif;
+}
+
+/*army green header*/
+header {
+    background-color: #4b5320;
+    color: white;
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    text-align: center;
+    font-size: 24px;
+}
+
+/*back to login text*/
+header a {
+    color: white;
+    background: none;
+    text-decoration: underline;
+    font-size: 16px;
+}
+
+header a:hover {
+    color: #e4e4e4;
+    background: none;
+}
+
+/*makes dashboard*/
+.dashboard-container {
+    width: 90%;
+    max-width: 1000px;
+    margin-top: 100px;
+    gap: 20px;
+}
+
+/*each table is only half of dashboard*/
+.dashboard-item {
+    width: 48%; 
+}
+
+/*headers for tables*/
+h2 {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+/*table stuff*/
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+td {
+    background-color: #fff;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+tr td [colspan] {
+    text-align: center;
+    font-size: 16px;
+    color: #000000;
+}
