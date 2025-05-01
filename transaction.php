@@ -42,7 +42,7 @@
 
         #sql query
         $sql = "INSERT INTO transaction(transactionID, employeeID, barcodeID, transaction_type, timestamp, notes)
-                VALUES (:transactionID, :employeeID, :barcodeID, :transaction_type, :notes, :timestamp)";
+                VALUES (:transactionID, :employeeID, :barcodeID, :transaction_type, :timestamp, :notes)";
         
         #add to table
         $add = $pdo->prepare($sql);
