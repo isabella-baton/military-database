@@ -1,52 +1,65 @@
 <?php
-    // Enable error reporting for debugging
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
 
-    // Database connection script
+    #database script
     require 'includes/database-connection.php';
 
-    // Start the session
+    #starts the session
     session_start();
 
-    // Set error message to empty for later handling
+    #sets the error message for the popup later
     $error = "";
 
-    // Get employee information
+    #gets employee info
     function getInfo(PDO $pdo, string $employeeID) {
         $sql = "SELECT employeeID, password, department FROM employee WHERE employeeID = :employeeID";
         $info = pdo($pdo, $sql, ['employeeID' => $employeeID])->fetch();
         return $info;
     }
 
-    // Check if request method is POST
+    #changes password to hash
+    function changePassword(PDO $pdo, string $employeeID, string $password) {
+        $hashedPass = password_hash($password, PASSWORD_DEFAULT);
+
+        $sql = "UPDATE employee SET password = :hashedPass WHERE employeeID = :employeeID";
+
+        $change = $pdo->prepare($sql);
+        $change->execute([
+            'hashedPass' => $hashedPass,
+            'employeeID' => $employeeID
+        ]);
+    }
+
+    #checks if request is post
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Retrieve inputted info
+        #retrieves info from the input
         $employeeID = $_POST['employeeID'];
         $password = $_POST['password'];
 
-        // Retrieve employee info
+        #gets all other information
         $info = getInfo($pdo, $employeeID);
 
-        // Ensure there is info AND their password is correct
-        if ($info && $password === $info['password']) {
+        #changes their password
+        changePassword($pdo, $employeeID, $password);
+
+        #ensure there is info AND their password is correct
+        if ($info && password_verify($password, $info['password'])) {
             $_SESSION['employeeID'] = $employeeID;
             $_SESSION['department'] = $info['department'];
 
-            // Check the user's department stored in the session
+            #check the user's department
             if ($_SESSION['department'] === 'Admin') {
-                // If the user is an Admin, redirect them to the admin dashboard
+                #if user is admin, redirect to admin
                 echo "Redirecting to admin.php";
 				header("Location: admin.php");
-                exit; // Stop further script execution after redirect
+                exit; #stop further script execution
             } else {
-                // If the user is not an Admin, redirect them to the basic user dashboard
+                #if user is not an admin, redirect to basic
                 echo "Redirecting to basic.php";
 				header("Location: basic.php");
-                exit; // Stop further script execution after redirect
+                exit; #stop further script execution
             }
         } else {
-            // Invalid login - show error message
+            #invalid! show error
             $error = "Invalid login - please try again.";
             echo "<script>alert('$error');</script>";
         }
