@@ -145,6 +145,7 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Due Date</th>
+                        <th>Days Overdue</th>
                     </tr>
                 </thead>
 
@@ -158,6 +159,7 @@
                             <td> <?php echo htmlspecialchars($item['first_name']); ?> </td>
                             <td> <?php echo htmlspecialchars($item['last_name']); ?> </td>
                             <td> <?php echo htmlspecialchars($item['due_date']); ?> </td>
+                            <td> <?php echo htmlspecialchars($item['days_overdue']); ?> </td>
                             <td>
                                 <a href="assigned/modify.php?barcodeID=<?= $item['barcodeID'] ?>&employeeID=<?= $item['employeeID'] ?>" class="modify-link">Modify</a>
                                 <a href="assigned/delete.php?barcodeID=<?= $item['barcodeID'] ?>&employeeID=<?= $item['employeeID'] ?>" class="delete-link" onclick="return confirm('Delete this assignment?')">Delete</a>
