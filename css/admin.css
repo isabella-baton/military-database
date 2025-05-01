@@ -88,3 +88,31 @@ tr td [colspan] {
     font-size: 16px;
     color: #000000;
 }
+
+/* row highlight */
+tr.red td {
+    background-color: #f8d7da !important;
+}
+
+tr.yellow td {
+    background-color: #fff3cd !important; 
+}
+
+/* this is super ugly but i added it so u know we can make this pretty too */
+.modify-link {
+    background-color: #e9e64c;
+    color: black;
+}
+
+.modify-link:hover {
+    background-color: #e0d800;
+}
+
+.delete-link {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-link:hover {
+    background-color: #c82333;
+}
