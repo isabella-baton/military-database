@@ -16,19 +16,6 @@
         return $info;
     }
 
-    #changes password to hash
-    function changePassword(PDO $pdo, string $employeeID, string $password) {
-        $hashedPass = password_hash($password, PASSWORD_DEFAULT);
-
-        $sql = "UPDATE employee SET password = :hashedPass WHERE employeeID = :employeeID";
-
-        $change = $pdo->prepare($sql);
-        $change->execute([
-            'hashedPass' => $hashedPass,
-            'employeeID' => $employeeID
-        ]);
-    }
-
     #checks if request is post
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         #retrieves info from the input
@@ -38,11 +25,7 @@
         #gets all other information
         $info = getInfo($pdo, $employeeID);
 
-        #changes their password
-        changePassword($pdo, $employeeID, $password);
-
-        #ensure there is info AND their password is correct
-        if ($info && password_verify($password, $info['password'])) {
+        if ($info && $password === $info['password']) {
             $_SESSION['employeeID'] = $employeeID;
             $_SESSION['department'] = $info['department'];
 

@@ -1,8 +1,12 @@
 <?php
+    #start the session
+    session_start();
+
+    #initialize the connection
     include 'includes/database-connection.php';
-    
-    #initialize the employee id (hardcode to 20001, since our login is messed up)
-    $employeeID = 20001;
+
+    #get employeeID from login
+    $employeeID = $_SESSION['employeeID'];
 
     #get available items
     $availableItemsQuery = "SELECT b.barcodeID, i.name, i.description, i.location_rack, i.location_shelf
