@@ -20,9 +20,12 @@
                          FROM item i
                          JOIN barcode b ON i.itemID = b.itemID
                          JOIN assigned_to a ON b.barcodeID = a.barcodeID
-                         WHERE a.employeeID = 20001
+                         WHERE a.employeeID = :employeeID
                          ORDER BY days_overdue DESC";
-    $issuedItems = $pdo->query($issuedItemsQuery)->fetchAll();
+    $issuedItems = $pdo->prepare($issuedItemsQuery);
+    $issuedItems->execute(['employeeID' => $employeeID]);
+    $issuedItems = $issuedItems->fetchAll();
+    
 ?>
 
 <!DOCTYPE html>
@@ -64,7 +67,7 @@
                     <!-- else, loop for each item -->
                     <?php else: ?>
                         <?php foreach ($availableItems as $item): ?>
-                            <tr onclick="window.location.href='transaction.php?barcodeID=<?php echo $item['barcodeID']; ?>&employeeID=<?php echo $employeeID; ?>&transaction=out'">
+                            <tr onclick="window.location.href='transaction.php?barcodeID=<?php echo $item['barcodeID']; ?>&transaction=out'">
                                 <td> <?php echo htmlspecialchars($item['barcodeID']); ?> </td>
                                 <td> <?php echo htmlspecialchars($item['name']); ?> </td>
                                 <td> <?php echo htmlspecialchars($item['description']); ?> </td>
@@ -97,7 +100,7 @@
                     <!-- else, loop for each item -->
                     <?php else: ?>
                         <?php foreach ($issuedItems as $item): ?>
-                            <tr onclick="window.location.href='transaction.php?barcodeID=<?php echo $item['barcodeID']; ?>&employeeID=<?php echo $employeeID; ?>&transaction=return'">
+                            <tr onclick="window.location.href='transaction.php?barcodeID=<?php echo $item['barcodeID']; ?>&transaction=return'">
                                 <td> <?php echo htmlspecialchars($item['barcodeID']); ?> </td>
                                 <td> <?php echo htmlspecialchars($item['name']); ?> </td>
                                 <td> <?php echo htmlspecialchars($item['due_date']); ?> </td>

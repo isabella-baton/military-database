@@ -1,9 +1,15 @@
 <?php
+    #starts the session
+    session_start();
+
+    #pulls from database connection
     include "includes/database-connection.php";
     
+    #get employeeID from the session
+    $employeeID = $_SESSION['employeeID'];
+
     #get the parameters
     $barcodeID = $_GET["barcodeID"];
-    $employeeID = $_GET["employeeID"];
     $transaction_type = $_GET["transaction"];
 
     #get the item"s information
@@ -58,9 +64,9 @@
 
     #insert assigned_to function (for input handling !)
     function addAssignment(PDO $pdo, string $barcodeID, string $employeeID) {
-        #sql query
-        $sql = "INSERT INTO assigned_to(employeeID, barcodeID, due_date)
-                VALUES (:employeeID, :barcodeID, :due_date)";
+        #sql query (for insertion)
+        $sql_insert = "INSERT INTO assigned_to(employeeID, barcodeID, due_date)
+                       VALUES (:employeeID, :barcodeID, :due_date)";
         
         #get the item's information
         $item = getInfo($pdo, $barcodeID);
@@ -70,16 +76,23 @@
         $dueDate->modify("+{$item['max_checkout_days']} days"); #due date
 
         #add to table
-        $add = $pdo->prepare($sql);
+        $add = $pdo->prepare($sql_insert);
         $add->execute([
             'employeeID' => $employeeID,
             'barcodeID' => $barcodeID,
             'due_date' => $dueDate->format('Y-m-d')
         ]);
+
+        #sql query (for changing item status)
+        $sql_change = "UPDATE barcode SET status = 'issued' WHERE barcodeID = :barcodeID";
+
+        #change status
+        $change = $pdo->prepare($sql_change);
+        $change->execute(['barcodeID' => $barcodeID]);
     }
 
     #delete assigned_to function (for input handling !)
-    function deleteAssignment(PDO $pdo, string $barcodeID, string $employeeID) {
+    function deleteAssignment(PDO $pdo, string $barcodeID, string $employeeID, string $status) {
         #sql query
         $sql = "DELETE FROM assigned_to
                 WHERE employeeID = :employeeID AND barcodeID = :barcodeID";
@@ -90,21 +103,48 @@
             'employeeID' => $employeeID,
             'barcodeID' => $barcodeID
         ]);
+
+        #sql query (for changing item status)
+        $sql_change = "UPDATE barcode SET status = :status WHERE barcodeID = :barcodeID";
+
+        #change status
+        $change = $pdo->prepare($sql_change);
+        $change->execute([
+            'status' => $status,
+            'barcodeID' => $barcodeID
+        ]);
     }
 
     #form submission logic
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        #gets the notes
         $notes = $_POST['notes'];
+
+        #gets whether the item came damaged
+        if($transaction_type === "return" && isset($_POST['damaged'])) {
+            if ($_POST['damaged'] === "yes") {
+                $status = "damaged";
+            } else if ($_POST['damaged'] === "no") {
+                $status = "available";
+            }
+        } else {
+            $status = "available";
+        }
+
         #add transaction to transaction table
         insertTransaction($pdo, $barcodeID, $employeeID, $transaction_type, $notes);
 
         if ($transaction_type === "return") {
             #removes from assigned table
-            deleteAssignment($pdo, $barcodeID, $employeeID);
+            deleteAssignment($pdo, $barcodeID, $employeeID, $status);
         } else if ($transaction_type === "out") {
             #adds to assigned table
             addAssignment($pdo, $barcodeID, $employeeID);
         }
+
+        #redirects to avoid form resubmission (with success = 1 for the little message :) )
+        header("Location: transaction.php?barcodeID=$barcodeID&transaction=$transaction_type&success=1");
+        exit;
     }
 ?>
 
@@ -144,10 +184,29 @@
 
                 <!-- makes input to the text area require if a return -->
                 <textarea id="notes" name="notes" <?= $transaction_type === "return" ? "required" : "" ?>></textarea>
+
+                <!-- add a damaged option for returns -->
+                <?php if ($transaction_type === "return"): ?>
+                    <label>Is the item damaged upon return?</label><br>
+                    <input type="radio" id="d_yes" name="damaged" value="yes" required>
+                    <label for="d_yes">Yes</label><br>
+                    <input type="radio" id="d_no" name="damaged" value="no" required>
+                    <label for="d_no">No</label><br><br>
+                <?php endif; ?>
+
+                <!-- button for submission -->
                 <input type="submit" value="Submit!">
             </form>
         </div>
     </div>
+
+    <!-- adds the little pop-up for success and reroutes to basic -->
+    <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+        <script>
+            alert("Transaction complete! Redirecting back to dashboard...");
+            window.location.href = "basic.php";
+        </script>
+    <?php endif; ?>
 </body>
 
 </html>
