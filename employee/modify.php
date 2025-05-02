@@ -41,14 +41,17 @@
         $role = $_POST['role'];
 
         #update table
-        $sql = "UPDATE barcode
-                SET itemID = :itemID, status = :status
-                WHERE barcodeID = :barcodeID";
+        $sql = "UPDATE employee
+                SET password = :password, first_name = :first_name, last_name = :last_name, department = :department, role = :role
+                WHERE employeeID = :employeeID";
         $update = $pdo->prepare($sql);
         $update->execute([
-            'itemID' => $itemID,
-            'status' => $status,
-            'barcodeID' => $barcodeID
+            'password' => $password,
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'department' => $department,
+            'role' => $role,
+            'employeeID' => $employeeID
         ]);
 
         #send back to dashboard after completion
