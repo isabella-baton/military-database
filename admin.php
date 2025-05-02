@@ -9,8 +9,10 @@
     $employeeID = $_SESSION['employeeID'];
 
     #get item info
-    $itemQuery = "SELECT i.itemID, i.name, i.description, i.category, i.location_rack, i.location_shelf, i.max_checkout_days
-                  FROM item i";
+    $itemQuery = "SELECT i.itemID, s.name as sName, i.name as iName, i.description, i.category, i.location_rack, i.location_shelf, i.max_checkout_days
+                  FROM item i
+                  JOIN supplier s ON s.supplierID = i.supplierID
+                  ORDER BY i.itemID";
     $items = $pdo->query($itemQuery)->fetchAll();
 
     #get barcode info
@@ -77,6 +79,7 @@
                 <thead>
                     <tr>
                         <th>Item ID</th>
+                        <th>Supplier</th>
                         <th>Name</th>
                         <th>Description</th>
                         <th>Category</th>
@@ -90,7 +93,8 @@
                     <?php foreach ($items as $item): ?>
                         <tr>
                             <td> <?php echo htmlspecialchars($item['itemID']); ?> </td>
-                            <td> <?php echo htmlspecialchars($item['name']); ?> </td>
+                            <td> <?php echo htmlspecialchars($item['sName']); ?> </td>
+                            <td> <?php echo htmlspecialchars($item['iName']); ?> </td>
                             <td> <?php echo htmlspecialchars($item['description']); ?> </td>
                             <td> <?php echo htmlspecialchars($item['category']); ?> </td>
                             <td> <?php echo htmlspecialchars($item['location_rack']); ?> </td>
