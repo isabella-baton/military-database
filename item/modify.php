@@ -89,7 +89,7 @@
 <body>
     <!-- header prints the name of the page and has a link back to the login -->
     <header>
-        <h1>Modify an Item</h1>
+        <h1>Modify Item</h1>
         <a href="../admin.php">Return to Dashboard</a>
     </header>
     <div class="add_modify-container">

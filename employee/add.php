@@ -27,7 +27,7 @@
         $department = $_POST['department'];
         $role = $_POST['role'];
         
-        #calculate barcodeID
+        #calculate employeeID
         $nextID = getNextID($pdo);
 
         #add to table

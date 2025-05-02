@@ -29,7 +29,7 @@
         $location_shelf = $_POST['location_shelf'];
         $max_checkout_days = $_POST['max_checkout_days'];
         
-        #calculate barcodeID
+        #calculate itemID
         $nextID = getNextID($pdo);
 
         #add to table
