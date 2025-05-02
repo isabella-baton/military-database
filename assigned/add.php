@@ -74,32 +74,38 @@
     <!-- header prints the name of the page and has a link back to the login -->
     <header>
         <h1>Create new Assignment</h1>
-        <a href="admin.php">Return to Dashboard</a>
+        <a href="../admin.php">Return to Dashboard</a>
     </header>
+    <div class="add_modify-container">
+        <form class="add_modify-form" method="POST">
+            <!-- gets employeeID -->
+            <label>Employee:
+                <select name="employeeID" required>
+                    <option value="">Select an Employee:</option>
+                    <?php foreach ($employees as $employee): ?>
+                        <option value="<?= htmlspecialchars($employee['employeeID']) ?>">
+                            <?=htmlspecialchars($employee['first_name'])?> <?=htmlspecialchars($employee['last_name'])?> (ID: <?= htmlspecialchars($employee['employeeID']) ?>)
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </label> <br>
 
-    <form method="POST">
-        <label>Employee:
-            <select name="employeeID" required>
-                <option value="">Select an Employee:</option>
-                <?php foreach ($employees as $employee): ?>
-                    <option value="<?= htmlspecialchars($employee['employeeID']) ?>">
-                        <?=htmlspecialchars($employee['first_name'])?> <?=htmlspecialchars($employee['last_name'])?> (ID: <?= htmlspecialchars($employee['employeeID']) ?>)
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </label> <br>
-        <label>Barcoded Item:
-            <select name="barcodeID" required>
-                <option value="">Select an Item:</option>
-                <?php foreach ($barcodes as $item): ?>
-                    <option value="<?= htmlspecialchars($item['barcodeID']) ?>">
-                        <?=htmlspecialchars($item['name'])?> (ID: <?= htmlspecialchars($item['barcodeID']) ?>)
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </label> <br>
-        <button type="submit">Add Assignment</button>
-    </form>
+            <!-- gets barcodeID -->
+            <label>Barcoded Item:
+                <select name="barcodeID" required>
+                    <option value="">Select an Item:</option>
+                    <?php foreach ($barcodes as $item): ?>
+                        <option value="<?= htmlspecialchars($item['barcodeID']) ?>">
+                            <?=htmlspecialchars($item['name'])?> (ID: <?= htmlspecialchars($item['barcodeID']) ?>)
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </label> <br>
+
+            <!-- submits information to database -->
+            <button type="submit">Add Assignment</button>
+        </form>
+    </div>
 </body>
 
 </html>

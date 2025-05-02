@@ -1,0 +1,97 @@
+/* background */
+body {
+    margin: 0;
+    padding: 0;
+    padding-top: 200px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: sans-serif;
+}
+
+/* army green header */
+header {
+    background-color: #4b5320;
+    color: white;
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    font-size: 24px;
+}
+
+/* back to dashboard text */
+header a {
+    color: white;
+    background: none;
+    text-decoration: underline;
+    font-size: 16px;
+}
+
+header a:hover {
+    color: #e4e4e4;
+}
+
+/* makes dashboard */
+.add_modify-container {
+    width: 90%;
+    max-width: 1000px;
+    margin-top: 20px;
+    gap: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+/* transaction form */
+.add_modify-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.add_modify-form label {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.add_modify-form select {
+    font-size: 16px;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.add_modify-form textarea {
+    width: 100%;
+    max-width: 500px;
+    height: 150px;
+    resize: vertical;
+    font-size: 16px;
+    border: 1px solid #000000;
+}
+
+.add_modify-form button {
+    background-color: #4b5320;
+    color: white;
+    border: none;
+    font-size: 18px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.add_modify-form button:hover {
+    background-color: #3a4423;
+}
