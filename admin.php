@@ -16,7 +16,8 @@
     #get barcode info
     $barcodeQuery = "SELECT b.barcodeID, i.name, b.status
                   FROM barcode b
-                  JOIN item i ON i.itemID = b.itemID";
+                  JOIN item i ON i.itemID = b.itemID
+                  ORDER BY b.barcodeID";
     $barcodes = $pdo->query($barcodeQuery)->fetchAll();
 
     #get assigned item info
