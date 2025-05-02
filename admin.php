@@ -270,8 +270,8 @@
                             <td> <?php echo htmlspecialchars($transaction['timestamp']); ?> </td>
                             <td> <?php echo htmlspecialchars($transaction['notes']); ?> </td>
                             <td>
-                                <a href="transaction/modify.php?employeeID=<?= $employee['employeeID'] ?>" class="modify-link">Modify</a>
-                                <a href="transaction/delete.php?employeeID=<?= $employee['employeeID'] ?>" class="delete-link" onclick="return confirm('Delete this transaction?')">Delete</a>
+                                <a href="transaction/modify.php?transactionID=<?= $transaction['transactionID'] ?>" class="modify-link">Modify</a>
+                                <a href="transaction/delete.php?transactionID=<?= $transaction['transactionID'] ?>" class="delete-link" onclick="return confirm('Delete this transaction?')">Delete</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
