@@ -142,8 +142,8 @@
             addAssignment($pdo, $barcodeID, $employeeID);
         }
 
-        #redirects to avoid form resubmission (with success = 1 for the little message :) )
-        header("Location: transaction.php?barcodeID=$barcodeID&transaction=$transaction_type&success=1");
+        #redirects to avoid form resubmission
+        header("Location: basic.php");
         exit;
     }
 ?>
@@ -199,14 +199,6 @@
             </form>
         </div>
     </div>
-
-    <!-- adds the little pop-up for success and reroutes to basic -->
-    <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
-        <script>
-            alert("Transaction complete! Redirecting back to dashboard...");
-            window.location.href = "basic.php";
-        </script>
-    <?php endif; ?>
 </body>
 
 </html>

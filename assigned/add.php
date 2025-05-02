@@ -21,10 +21,6 @@
         $maxDays->execute(['barcodeID' => $barcodeID]);
         $maxDays = $maxDays->fetch();
 
-        if (!$maxDays) {
-            die("Invalid barcode ID or item not found.");
-        }
-
         $dueDate = new DateTime();
         $dueDate->modify("+{$maxDays['max_checkout_days']} days");
         $dueDateFormatted = $dueDate->format('Y-m-d');
@@ -63,7 +59,7 @@
 <!DOCTYPE html>
 <html>
 
-<!-- pulls from the admin.css file :) -->
+<!-- pulls from the add_modify.css file :) -->
 <head>
     <meta charset="UTF-8">
     <title>Add Assignment</title>
